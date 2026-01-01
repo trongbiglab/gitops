@@ -1,6 +1,6 @@
 settings:
   clusterName: main-cluster
-  interruptionQueue: main-cluster
+  # interruptionQueue: main-cluster
 
 serviceAccount:
   create: true
