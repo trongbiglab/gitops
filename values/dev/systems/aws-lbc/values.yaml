@@ -1,6 +1,6 @@
 clusterName: main-cluster
 serviceAccount:
-  create: false
+  create: true
   name: aws-load-balancer-controller
 region: ap-northeast-2
 vpcId: vpc-09b668c6433dec510
