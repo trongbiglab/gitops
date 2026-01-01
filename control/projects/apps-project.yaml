@@ -1,18 +1,22 @@
-apiVersion: argoproj.io/v1alpha1
-kind: AppProject
-metadata:
-  name: bootstrap-application
-  namespace: argocd
-spec:
-  description: "Bootstrap apps"
+# apiVersion: argoproj.io/v1alpha1
+# kind: AppProject
+# metadata:
+#   name: bootstrap-application
+#   namespace: argocd
+# spec:
+#   description: "Bootstrap apps"
 
-  sourceRepos:
-    - 'https://gitlab.trongduong/infra*'
+#   sourceRepos:
+#     # Repo chứa Template Helm Chart của service
+#     - 'https://gitlab.com/platform7740601/service-chart-template.git'
+    
+#     # Repo chứa cấu hình values
+#     - 'https://gitlab.com/platform7740601/gitops.git'
 
-  destinations:
-    - namespace: '*'
-      server: https://kubernetes.default.svc
+#   destinations:
+#     - namespace: '*'
+#       server: https://kubernetes.default.svc
 
-  clusterResourceWhitelist:
-    - group: '*'
-      kind: '*'
+#   clusterResourceWhitelist:
+#     - group: '*'
+#       kind: '*'

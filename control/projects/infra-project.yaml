@@ -7,26 +7,18 @@ spec:
   description: "Infra apps (kapenter, harbor,...)"
 
   sourceRepos:
-    - 'https://gitea.devops.osswave.kr/*'
-    - 'https://gitea.devops.osswave.kr/platform/*'
-    - 'https://gitea.devops.osswave.kr/bootstrap-helmchart/*'
-    - 'https://grafana.github.io/helm-charts'
-    - 'https://prometheus-community.github.io/helm-charts'
-    - 'https://charts.bitnami.com/bitnami'
-    - 'oci://public.ecr.aws/karpenter'
-    - 'oci://public.ecr.aws/karpenter/karpenter'
+    # Repo chứa Helm Charts (bao gồm cả các repo đang comment)
+    - 'public.ecr.aws/karpenter/*'
     - 'https://aws.github.io/eks-charts'
-    - 'public.ecr.aws/karpenter/karpenter'
-    - 'public.ecr.aws/karpenter'  
-    - 'https://kubernetes-sigs.github.io'
     - 'https://kubernetes-sigs.github.io/aws-ebs-csi-driver'
     - 'https://charts.external-secrets.io'
-    - 'https://nexus.devops.osswave.kr'
-    - 'nexus.devops.osswave.kr'
-    - 'https://raw.githubusercontent.com'
-    - 'https://raw.githubusercontent.com/*'
-    - 'https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs'
-    - 'https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/master/charts'
+    - 'https://helm.goharbor.io'
+    - 'https://SonarSource.github.io/helm-chart-sonarqube'
+    - 'https://charts.konghq.com'
+    - 'https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/*'
+    
+    # Repo chứa cấu hình values (GitOps repo)
+    - 'https://github.com/trongbiglab/gitops'
 
   destinations:
     - namespace: '*'

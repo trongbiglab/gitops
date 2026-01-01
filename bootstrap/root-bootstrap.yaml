@@ -7,7 +7,7 @@ spec:
   project: applications
 
   source:
-    repoURL: https://gitlab.com/platform/gitops.git
+    repoURL: https://github.com/trongbiglab/gitops
     targetRevision: main
     path: control
     directory:
