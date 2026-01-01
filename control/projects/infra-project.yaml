@@ -4,21 +4,24 @@ metadata:
   name: infra-systems
   namespace: argocd
 spec:
-  description: "Infra apps (kapenter, harbor,...)"
+  description: "Infra apps (karpenter, harbor,...)"
 
   sourceRepos:
-    # Repo chứa Helm Charts (bao gồm cả các repo đang comment)
-    - 'public.ecr.aws/karpenter/*'
+    # Cho phép tất cả các nguồn từ ECR Public (OCI)
+    - 'public.ecr.aws/*'
+    - 'public.ecr.aws/karpenter'
+    
+    # Cho phép tất cả các nguồn từ GitHub của bạn
+    - 'https://github.com/trongbiglab/gitops'
+    
+    # Cho phép các Helm Repo phổ biến (dùng dấu * ở cuối cho chắc)
     - 'https://aws.github.io/eks-charts'
-    - 'https://kubernetes-sigs.github.io/aws-ebs-csi-driver'
+    - 'https://kubernetes-sigs.github.io/*'
     - 'https://charts.external-secrets.io'
     - 'https://helm.goharbor.io'
-    - 'https://SonarSource.github.io/helm-chart-sonarqube'
+    - 'https://SonarSource.github.io/*'
     - 'https://charts.konghq.com'
-    - 'https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/*'
-    
-    # Repo chứa cấu hình values (GitOps repo)
-    - 'https://github.com/trongbiglab/gitops'
+    - 'https://raw.githubusercontent.com/*'
 
   destinations:
     - namespace: '*'
