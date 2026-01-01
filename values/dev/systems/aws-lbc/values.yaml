@@ -1,0 +1,19 @@
+clusterName: main-cluster
+serviceAccount:
+  create: false
+  name: aws-load-balancer-controller
+region: ap-northeast-2
+vpcId: vpc-0a12a3741507df327
+clusterSecretsPermissions: 
+  allowAllSecrets: true
+priorityClassName: critical-workload
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        preference:
+          matchExpressions:
+            - key: purpose
+              operator: In
+              values:
+                - system

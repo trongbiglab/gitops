@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: bootstrap-application
+  namespace: argocd
+spec:
+  description: "Bootstrap apps"
+
+  sourceRepos:
+    - 'https://gitlab.trongduong/infra*'
+
+  destinations:
+    - namespace: '*'
+      server: https://kubernetes.default.svc
+
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'

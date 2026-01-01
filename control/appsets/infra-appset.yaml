@@ -1,0 +1,107 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: platform-infra-dev
+  namespace: argocd
+spec:
+  goTemplate: true
+
+  generators:
+    - list:
+        elements:
+          - name: karpenter
+            repoURL: public.ecr.aws/karpenter
+            chart: karpenter
+            targetRevision: "1.7.3"
+            namespace: kube-system
+            releaseName: karpenter
+            valuesPath: values/dev/systems/karpenter/values.yaml
+            
+          - name: aws-load-balancer-controller
+            repoURL: https://aws.github.io/eks-charts
+            chart: aws-load-balancer-controller
+            targetRevision: "1.16.0"
+            namespace: kube-system
+            releaseName: aws-lbc
+            valuesPath: values/dev/systems/aws-lbc/values.yaml
+            
+          # - name: aws-ebs-csi-driver
+          #   repoURL: https://kubernetes-sigs.github.io/aws-ebs-csi-driver
+          #   chart: aws-ebs-csi-driver
+          #   targetRevision: "2.51.0"
+          #   namespace: kube-system
+          #   releaseName: aws-ebs-csi-driver
+          #   valuesPath: values/dev/infra/ebs-csi-driver/values.yaml
+
+          # - name: external-secrets
+          #   repoURL: https://charts.external-secrets.io
+          #   chart: external-secrets
+          #   targetRevision: "0.12.1"
+          #   namespace: external-secrets
+          #   releaseName: external-secrets
+          #   valuesPath: values/dev/systems/external-secrets/values.yaml
+  
+          # - name: harbor
+          #   repoURL: https://helm.goharbor.io
+          #   chart: harbor
+          #   targetRevision: "1.15.0"
+          #   namespace: infra
+          #   releaseName: harbor
+          #   valuesPath: values/dev/systems/harbor/values.yaml
+
+          # - name: sonarqube
+          #   repoURL: https://SonarSource.github.io/helm-chart-sonarqube
+          #   chart: sonarqube
+          #   targetRevision: "10.7.0" 
+          #   namespace: infra
+          #   releaseName: sonarqube
+          #   valuesPath: values/dev/systems/sonarqube/values.yaml
+            
+          # - name: kong
+          #   repoURL: https://charts.konghq.com
+          #   chart: kong
+          #   targetRevision: "2.38.0"
+          #   namespace: kong
+          #   releaseName: kong
+          #   valuesPath: values/dev/systems/kong/values.yaml
+
+          
+          # - name: nfs-csi-driver
+          #   repoURL: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/master/charts
+          #   chart: csi-driver-nfs
+          #   targetRevision: "v4.12.1"
+          #   namespace: kube-system
+          #   releaseName: nfs-csi-driver
+          #   valuesPath: values/dev/infra/nfs-csi-driver/values.yaml
+          
+
+  template:
+    metadata:
+      name: '{{.name}}'
+      namespace: argocd
+    spec:
+      project: infra-systems
+
+      sources:
+        - repoURL: '{{.repoURL}}'
+          chart: '{{.chart}}'
+          targetRevision: '{{.targetRevision}}'
+          helm:
+            releaseName: '{{.releaseName}}'
+            valueFiles:
+              - $values/{{.valuesPath}}
+
+        - repoURL: https://gitlab.com/platform7740601/gitops.git
+          targetRevision: main
+          ref: values
+
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{.namespace}}'
+
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

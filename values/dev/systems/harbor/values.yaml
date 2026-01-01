@@ -1,0 +1,29 @@
+expose:
+  type: ingress
+  ingress:
+    hosts:
+      core: harbor.trongduong.space
+    annotations:
+      kubernetes.io/ingress.class: alb
+      alb.ingress.kubernetes.io/scheme: internet-facing
+      alb.ingress.kubernetes.io/target-type: ip
+
+persistence:
+  enabled: true
+  persistentVolumeClaim:
+    registry:
+      storageClass: "gp3" 
+      size: 100Gi
+    jobservice:
+      storageClass: "gp3"
+      size: 10Gi
+
+database:
+  type: external
+  external:
+    host: "dsq-rds-db.xxxx.ap-northeast-2.rds.amazonaws.com"
+    port: 5432
+    username: "postgres"
+    coreDatabase: "harbor"
+    existingSecret: "rds-db-password" 
+    secretKey: "password"

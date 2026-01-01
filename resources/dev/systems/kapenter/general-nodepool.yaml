@@ -1,0 +1,68 @@
+apiVersion: karpenter.sh/v1
+kind: NodePool
+metadata:
+  name: general-purpose
+spec:
+  template:
+    metadata:
+      labels:
+        workload: general-purpose
+
+    spec:
+      nodeClassRef:
+        group: karpenter.k8s.aws
+        kind: EC2NodeClass
+        name: default
+
+      expireAfter: 720h
+
+      # ---------- Capacity Type Preference (Spot-first) ----------
+      requirements:
+        # Prefer Spot, fallback to OnDemand automatically
+        - key: karpenter.sh/capacity-type
+          operator: In
+          values: ["spot", "on-demand"]
+
+        # Architecture
+        - key: kubernetes.io/arch
+          operator: In
+          values: ["amd64"]
+
+        # OS
+        - key: kubernetes.io/os
+          operator: In
+          values: ["linux"]
+
+        # Instance category (balanced CPU/mem mix)
+        - key: karpenter.k8s.aws/instance-category
+          operator: In
+          values: ["c", "m", "t"]
+
+        # Prevent old gen instances
+        - key: karpenter.k8s.aws/instance-generation
+          operator: Gt
+          values: ["3"]
+
+        # Spread across Availability Zones (much better for Spot)
+        - key: topology.kubernetes.io/zone
+          operator: In
+          values: ["ap-northeast-2a","ap-northeast-2c"]
+
+  # ---------- Resource Limits ----------
+  limits:
+    cpu: "50"
+    memory: 100Gi
+
+  # ---------- Spot Stability & Self-Healing ----------
+  disruption:
+    consolidationPolicy: WhenEmpty
+    consolidateAfter: 5m
+    budgets:
+      - nodes: 10%
+      # On Weekdays during business hours, don't do any deprovisioning.
+      - schedule: "0 9 * * mon-fri"
+        duration: 8h
+        nodes: "0"
+
+  # Higher weight → higher priority for scheduling
+  weight: 50

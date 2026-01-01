@@ -1,0 +1,43 @@
+# apiVersion: argoproj.io/v1alpha1
+# kind: ApplicationSet
+# metadata:
+#   name: platform-apps-dev
+#   namespace: argocd
+# spec:
+#   goTemplate: true
+#   generators:
+#     - list:
+#         elements:
+#           - name: user-service
+#             namespace: shopnow
+#             repoURL: https://gitlab.com/platform7740601/service-chart-template.git
+#             path: .
+#             targetRevision: main
+#             releaseName: user-service
+#             valuesPath: values/dev/applications/user-service/values.yaml
+#   template:
+#     metadata:
+#       name: '{{.name}}'
+#       namespace: argocd
+#     spec:
+#       project: bootstrap-application
+#       sources:
+#         - repoURL: '{{.repoURL}}'
+#           targetRevision: '{{.targetRevision}}'
+#           path: '{{.path}}'
+#           helm:
+#             releaseName: '{{.releaseName}}'
+#             valueFiles:
+#               - $values/{{.valuesPath}}
+#         - repoURL: https://gitlab.com/platform7740601/gitops.git
+#           targetRevision: main
+#           ref: values
+#       destination:
+#         server: https://kubernetes.default.svc
+#         namespace: '{{.namespace}}'
+#       syncPolicy:
+#         automated:
+#           prune: true
+#           selfHeal: true
+#         syncOptions:
+#           - CreateNamespace=true
