@@ -50,6 +50,7 @@ jobservice: { nodeSelector: { purpose: system } }
 registry: { nodeSelector: { purpose: system } }
 exporter: { nodeSelector: { purpose: system } }
 trivy: { nodeSelector: { purpose: system } }
+nginx: { nodeSelector: { purpose: system } }
 
 postgresql:
   enabled: false
