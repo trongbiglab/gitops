@@ -3,13 +3,26 @@ env:
   pg_host: "dsq-rds-db.cdo6e2emyxdq.ap-northeast-2.rds.amazonaws.com"
   pg_user: "postgres"
   pg_database: "kong"
+  
+  # Lấy mật khẩu từ secret thực tế bạn đang có (rds-kong-secret)
   pg_password:
     valueFrom:
       secretKeyRef:
-        name: "rds-db-password"
+        name: "rds-kong-secret"
         key: "password"
+
+  # 2 dòng này dù docs không ghi nhưng là "chìa khóa" để giải quyết lỗi "no encryption"
   pg_ssl: "on"
   pg_ssl_verify: "off"
+
+  # Các cấu hình mặc định khác
+  router_flavor: "traditional"
+  nginx_worker_processes: "2"
+  proxy_access_log: /dev/stdout
+  proxy_error_log: /dev/stderr
+
+nodeSelector:
+  purpose: system
 
 deployment:
   kong:
@@ -19,9 +32,6 @@ ingressController:
   enabled: true
   nodeSelector:
     purpose: system
-
-nodeSelector:
-  purpose: system
 
 postgresql:
   enabled: false
