@@ -3,7 +3,7 @@ serviceAccount:
   create: true
   name: aws-load-balancer-controller
 region: ap-northeast-2
-vpcId: vpc-09b668c6433dec510
+vpcId: vpc-0cfa3011a811263a7
 clusterSecretsPermissions: 
   allowAllSecrets: true
 priorityClassName: critical-workload
