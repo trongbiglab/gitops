@@ -27,7 +27,7 @@ database:
     host: "dsq-rds-db.cdo6e2emyxdq.ap-northeast-2.rds.amazonaws.com"
     port: "5432"
     username: "postgres"
-    coreDatabase: "mainpostgresdb"
+    coreDatabase: "harbor"
     existingSecret: "rds-db-password"
     sslmode: "require"
   # Gộp podLabels vào đây (Nếu dùng internal thì nó có tác dụng, external thì có thể bỏ qua nhưng để đây không lỗi)
