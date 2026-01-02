@@ -1,23 +1,27 @@
-deployment:
-  nodeSelector:
-    purpose: system
-
 env:
-  database: postgres
+  database: "postgres"
   pg_host: "dsq-rds-db.cdo6e2emyxdq.ap-northeast-2.rds.amazonaws.com"
-  pg_user: postgres
-  pg_database: kong
+  pg_user: "postgres"
+  pg_database: "kong"
   pg_password:
     valueFrom:
       secretKeyRef:
-        name: rds-kong-secret # Secret trong namespace kong
-        key: password
+        name: "rds-db-password"
+        key: "password"
+  pg_ssl: "on"
+  pg_ssl_verify: "off"
 
-admin:
+deployment:
+  kong:
+    enabled: true
+
+ingressController:
   enabled: true
-  http: { enabled: true }
+  nodeSelector:
+    purpose: system
 
-proxy:
-  type: ClusterIP
+nodeSelector:
+  purpose: system
 
-postgresql: { enabled: false }
+postgresql:
+  enabled: false
