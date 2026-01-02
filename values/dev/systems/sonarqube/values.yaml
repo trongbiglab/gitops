@@ -1,20 +1,28 @@
+# Cấu hình kết nối Database external (RDS)
 jdbcOverwrite:
-  enable: true
+  enabled: true  # Dùng "enabled" thay vì "enable" (vì "enable" đã bị deprecated)
   jdbcUrl: "jdbc:postgresql://dsq-rds-db.cdo6e2emyxdq.ap-northeast-2.rds.amazonaws.com:5432/mainpostgresdb"
   jdbcUsername: "postgres"
-  jdbcPasswordSecret: "rds-db-password" # Dùng chung secret với Harbor vì cùng namespace infra
-  jdbcPasswordSecretKey: "password"
+  
+  # Đây là 2 tham số quan trọng nhất để khớp với rds-db-password của bạn
+  jdbcSecretName: "rds-db-password"
+  jdbcSecretPasswordKey: "password"
 
+# Tắt database postgres đi kèm của Helm Chart
 postgresql:
   enabled: false
+
+# Cấu hình lưu trữ dữ liệu
 persistence:
   enabled: true
   storageClass: "gp3"
   size: 20Gi
 
+# Chọn node để chạy SonarQube
 nodeSelector:
   purpose: system
 
+# Cấu hình service
 service:
   type: ClusterIP
   externalPort: 9000
