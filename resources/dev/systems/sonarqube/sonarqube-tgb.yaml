@@ -1,0 +1,11 @@
+apiVersion: elbv2.k8s.aws/v1beta1
+kind: TargetGroupBinding
+metadata:
+  name: sonarqube
+  namespace: infra
+spec:
+  targetGroupARN: arn:aws:elasticloadbalancing:ap-northeast-2:980921740481:targetgroup/sonar-tg/ec268804dc645286
+  targetType: ip
+  serviceRef:
+    name: sonarqube-sonarqube
+    port: 9000

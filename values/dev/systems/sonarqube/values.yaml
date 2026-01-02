@@ -1,17 +1,20 @@
-postgresql:
-  enabled: false 
-
 jdbcOverwrite:
   enable: true
-  jdbcUrl: "jdbc:postgresql://dsq-rds-db.xxxx.ap-northeast-2.rds.amazonaws.com:5432/sonarqube"
+  jdbcUrl: "dsq-rds-db.cdo6e2emyxdq.ap-northeast-2.rds.amazonaws.com:5432/sonarqube"
   jdbcUsername: "postgres"
-  jdbcPasswordSecret: "rds-sonar-secret"
+  jdbcPasswordSecret: "rds-db-password" # Dùng chung secret với Harbor vì cùng namespace infra
   jdbcPasswordSecretKey: "password"
+
+postgresql: { enabled: false }
 
 persistence:
   enabled: true
   storageClass: "gp3"
   size: 20Gi
 
-ingress:
-  enabled: false
+nodeSelector:
+  purpose: system
+
+service:
+  type: ClusterIP
+  externalPort: 9000

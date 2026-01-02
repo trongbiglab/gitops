@@ -1,18 +1,17 @@
 expose:
-  type: ingress
-  ingress:
-    hosts:
-      core: harbor.trongduong.space
-    annotations:
-      kubernetes.io/ingress.class: alb
-      alb.ingress.kubernetes.io/scheme: internet-facing
-      alb.ingress.kubernetes.io/target-type: ip
+  type: clusterIP
+  clusterIP:
+    name: harbor-server
+    ports:
+      http: 80
+
+externalURL: https://harbor.trongduong.space
 
 persistence:
   enabled: true
   persistentVolumeClaim:
     registry:
-      storageClass: "gp3" 
+      storageClass: "gp3" # Khớp với EBS CSI
       size: 100Gi
     jobservice:
       storageClass: "gp3"
@@ -21,9 +20,19 @@ persistence:
 database:
   type: external
   external:
-    host: "dsq-rds-db.xxxx.ap-northeast-2.rds.amazonaws.com"
+    host: "dsq-rds-db.cdo6e2emyxdq.ap-northeast-2.rds.amazonaws.com"
     port: 5432
     username: "postgres"
     coreDatabase: "harbor"
-    existingSecret: "rds-db-password" 
+    existingSecret: "rds-db-password" # Secret tạo bởi ExternalSecret trong namespace infra
     secretKey: "password"
+
+# Tắt các thành phần nội bộ để dùng RDS/EBS
+postgresql: { enabled: false }
+redis: { internal: true } # Nếu muốn dùng ElastiCache thì đổi sang external sau
+
+# Ép các thành phần chạy trên node system
+portal: { nodeSelector: { purpose: system } }
+core: { nodeSelector: { purpose: system } }
+jobservice: { nodeSelector: { purpose: system } }
+registry: { nodeSelector: { purpose: system } }

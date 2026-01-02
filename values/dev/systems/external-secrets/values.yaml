@@ -1,0 +1,10 @@
+serviceAccount:
+  create: true
+  name: external-secrets 
+
+nodeSelector:
+  purpose: system
+webhook:
+  nodeSelector: { purpose: system }
+certController:
+  nodeSelector: { purpose: system }

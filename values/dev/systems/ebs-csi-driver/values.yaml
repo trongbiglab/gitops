@@ -1,0 +1,20 @@
+controller:
+  serviceAccount:
+    create: true
+    name: ebs-csi-controller-sa
+  nodeSelector:
+    purpose: system
+
+node:
+  nodeSelector:
+    purpose: system
+
+storageClasses:
+  - name: gp3 
+    annotations:
+      storageclass.kubernetes.io/is-default-class: "true"
+    provisioner: ebs.csi.aws.com
+    volumeBindingMode: WaitForFirstConsumer
+    parameters:
+      type: gp3
+      encrypted: "true"

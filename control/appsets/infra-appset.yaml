@@ -25,45 +25,45 @@ spec:
             releaseName: aws-lbc
             valuesPath: values/dev/systems/aws-lbc/values.yaml
             
-          # - name: aws-ebs-csi-driver
-          #   repoURL: https://kubernetes-sigs.github.io/aws-ebs-csi-driver
-          #   chart: aws-ebs-csi-driver
-          #   targetRevision: "2.51.0"
-          #   namespace: kube-system
-          #   releaseName: aws-ebs-csi-driver
-          #   valuesPath: values/dev/infra/ebs-csi-driver/values.yaml
+          - name: aws-ebs-csi-driver
+            repoURL: https://kubernetes-sigs.github.io/aws-ebs-csi-driver
+            chart: aws-ebs-csi-driver
+            targetRevision: "2.51.0"
+            namespace: kube-system
+            releaseName: aws-ebs-csi-driver
+            valuesPath: values/dev/infra/ebs-csi-driver/values.yaml
 
-          # - name: external-secrets
-          #   repoURL: https://charts.external-secrets.io
-          #   chart: external-secrets
-          #   targetRevision: "0.12.1"
-          #   namespace: external-secrets
-          #   releaseName: external-secrets
-          #   valuesPath: values/dev/systems/external-secrets/values.yaml
+          - name: external-secrets
+            repoURL: https://charts.external-secrets.io
+            chart: external-secrets
+            targetRevision: "0.12.1"
+            namespace: external-secrets
+            releaseName: external-secrets
+            valuesPath: values/dev/systems/external-secrets/values.yaml
   
-          # - name: harbor
-          #   repoURL: https://helm.goharbor.io
-          #   chart: harbor
-          #   targetRevision: "1.15.0"
-          #   namespace: infra
-          #   releaseName: harbor
-          #   valuesPath: values/dev/systems/harbor/values.yaml
+          - name: harbor
+            repoURL: https://helm.goharbor.io
+            chart: harbor
+            targetRevision: "1.15.0"
+            namespace: infra
+            releaseName: harbor
+            valuesPath: values/dev/systems/harbor/values.yaml
 
-          # - name: sonarqube
-          #   repoURL: https://SonarSource.github.io/helm-chart-sonarqube
-          #   chart: sonarqube
-          #   targetRevision: "10.7.0" 
-          #   namespace: infra
-          #   releaseName: sonarqube
-          #   valuesPath: values/dev/systems/sonarqube/values.yaml
+          - name: sonarqube
+            repoURL: https://SonarSource.github.io/helm-chart-sonarqube
+            chart: sonarqube
+            targetRevision: "10.7.0" 
+            namespace: infra
+            releaseName: sonarqube
+            valuesPath: values/dev/systems/sonarqube/values.yaml
             
-          # - name: kong
-          #   repoURL: https://charts.konghq.com
-          #   chart: kong
-          #   targetRevision: "2.38.0"
-          #   namespace: kong
-          #   releaseName: kong
-          #   valuesPath: values/dev/systems/kong/values.yaml
+          - name: kong
+            repoURL: https://charts.konghq.com
+            chart: kong
+            targetRevision: "2.38.0"
+            namespace: kong
+            releaseName: kong
+            valuesPath: values/dev/systems/kong/values.yaml
 
           
           # - name: nfs-csi-driver

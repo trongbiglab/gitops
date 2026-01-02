@@ -1,0 +1,11 @@
+apiVersion: elbv2.k8s.aws/v1beta1
+kind: TargetGroupBinding
+metadata:
+  name: harbor-server
+  namespace: infra
+spec:
+  targetGroupARN: arn:aws:elasticloadbalancing:ap-northeast-2:980921740481:targetgroup/harbor-tg/0b131f775c07e568
+  targetType: ip
+  serviceRef:
+    name: harbor-server
+    port: 80
