@@ -10,9 +10,8 @@ priorityClassName: critical-workload
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
-      - weight: 100
-        preference:
-          matchExpressions:
+      nodeSelectorTerms: 
+        - matchExpressions:
             - key: purpose
               operator: In
               values:
