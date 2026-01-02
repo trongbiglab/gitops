@@ -1,4 +1,3 @@
-# Cấu hình kết nối Database external (RDS)
 jdbcOverwrite:
   enabled: true  # Dùng "enabled" thay vì "enable" (vì "enable" đã bị deprecated)
   jdbcUrl: "jdbc:postgresql://dsq-rds-db.cdo6e2emyxdq.ap-northeast-2.rds.amazonaws.com:5432/mainpostgresdb"

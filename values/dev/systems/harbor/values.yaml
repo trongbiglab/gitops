@@ -1,39 +1,55 @@
 expose:
   type: clusterIP
+  tls:
+    enabled: false
   clusterIP:
-    name: harbor-server
+    name: harbor
     ports:
-      http: 80
+      httpPort: 80
 
 externalURL: https://harbor.trongduong.space
 
 persistence:
   enabled: true
+  resourcePolicy: "keep"
   persistentVolumeClaim:
     registry:
-      storageClass: "gp3" # Khớp với EBS CSI
+      storageClass: "gp3"
       size: 100Gi
     jobservice:
-      storageClass: "gp3"
-      size: 10Gi
+      jobLog:
+        storageClass: "gp3"
+        size: 10Gi
 
 database:
   type: external
   external:
     host: "dsq-rds-db.cdo6e2emyxdq.ap-northeast-2.rds.amazonaws.com"
-    port: 5432
+    port: "5432"
     username: "postgres"
     coreDatabase: "harbor"
-    existingSecret: "rds-db-password" # Secret tạo bởi ExternalSecret trong namespace infra
-    secretKey: "password"
+    existingSecret: "rds-db-password"
+    sslmode: "disable"
+  # Gộp podLabels vào đây (Nếu dùng internal thì nó có tác dụng, external thì có thể bỏ qua nhưng để đây không lỗi)
+  podLabels: { purpose: system }
 
-# Tắt các thành phần nội bộ để dùng RDS/EBS
-postgresql: { enabled: false }
-# SỬA LẠI ĐOẠN NÀY
 redis:
-  type: internal  # Sử dụng redis đi kèm trong cụm
-  # Không đặt internal: true ở đây
+  type: internal
+  internal:
+    image:
+      repository: docker.io/goharbor/redis-photon
+      tag: v2.10.0
+    # Đưa nodeSelector vào bên trong cấu hình internal redis cho đúng chuẩn
+    nodeSelector: { purpose: system }
+  podLabels: { purpose: system }
+
+# Các thành phần khác giữ nguyên (mỗi key chỉ xuất hiện 1 lần)
 portal: { nodeSelector: { purpose: system } }
 core: { nodeSelector: { purpose: system } }
 jobservice: { nodeSelector: { purpose: system } }
 registry: { nodeSelector: { purpose: system } }
+exporter: { nodeSelector: { purpose: system } }
+trivy: { nodeSelector: { purpose: system } }
+
+postgresql:
+  enabled: false
