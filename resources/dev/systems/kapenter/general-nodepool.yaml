@@ -34,14 +34,14 @@ spec:
           values: ["linux"]
 
         # Instance category (balanced CPU/mem mix)
-        - key: karpenter.k8s.aws/instance-category
+        - key: node.kubernetes.io/instance-type
           operator: In
-          values: ["c", "m", "t"]
+          values: ["t3.large"]
 
         # Prevent old gen instances
-        - key: karpenter.k8s.aws/instance-generation
-          operator: Gt
-          values: ["3"]
+        # - key: karpenter.k8s.aws/instance-generation
+        #   operator: Gt
+        #   values: ["3"]
 
         # Spread across Availability Zones (much better for Spot)
         - key: topology.kubernetes.io/zone
