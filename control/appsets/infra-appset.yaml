@@ -31,7 +31,7 @@ spec:
             targetRevision: "2.51.0"
             namespace: kube-system
             releaseName: aws-ebs-csi-driver
-            valuesPath: values/dev/infra/ebs-csi-driver/values.yaml
+            valuesPath: values/dev/systems/ebs-csi-driver/values.yaml
 
           - name: external-secrets
             repoURL: https://charts.external-secrets.io

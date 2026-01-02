@@ -29,9 +29,10 @@ database:
 
 # Tắt các thành phần nội bộ để dùng RDS/EBS
 postgresql: { enabled: false }
-redis: { internal: true } # Nếu muốn dùng ElastiCache thì đổi sang external sau
-
-# Ép các thành phần chạy trên node system
+# SỬA LẠI ĐOẠN NÀY
+redis:
+  type: internal  # Sử dụng redis đi kèm trong cụm
+  # Không đặt internal: true ở đây
 portal: { nodeSelector: { purpose: system } }
 core: { nodeSelector: { purpose: system } }
 jobservice: { nodeSelector: { purpose: system } }
