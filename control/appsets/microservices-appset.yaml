@@ -15,7 +15,6 @@ spec:
             path: .
             valuesPath: values/dev/applications/shopnow-keycloak/values.yaml
 
-          # --- FRONTEND (Thêm mới) ---
           - name: shopnow-frontend
             namespace: shopnow
             targetRevision: main

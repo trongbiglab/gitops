@@ -13,7 +13,6 @@ spec:
     # Repo chứa cấu hình values
     - 'https://github.com/trongbiglab/gitops'
     - 'https://github.com/trongbiglab/*'
-    - 'quay.io/keycloak/keycloak'
 
   destinations:
     - namespace: '*'

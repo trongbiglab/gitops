@@ -1,8 +1,8 @@
 replicaCount: 1
 
 image:
-  repository: harbor.trongduong.space/shopnow/frontend
-  tag: v1
+  repository: duongtrong27/biglab
+  tag: shopnow-frontend-v1
 
 service:
   port: 80
