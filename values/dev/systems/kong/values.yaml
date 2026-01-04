@@ -59,7 +59,7 @@ env:
   admin_api_cors_allowed_origins: "http://kong-manager.trongduong.space"
   pg_ssl: "on"
   pg_ssl_verify: "off"
-  pg_ssl_version: "tlsv1_3"
+  # pg_ssl_version: "tlsv1_3"
 
   # Tùy chỉnh router để chạy nhanh hơn
   router_flavor: "traditional"
