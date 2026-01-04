@@ -89,6 +89,6 @@ env:
   
   # Bỏ pg_ssl_version để Kong tự thương lượng với Postgres 17
   
-  admin_gui_url: http://kong-manager.trongduong.space
-  admin_gui_api_url: http://kong-admin-api.trongduong.space
-  admin_api_cors_allowed_origins: "http://kong-manager.trongduong.space"
+  admin_gui_url: https://kong-manager.trongduong.space
+  admin_gui_api_url: https://kong-admin-api.trongduong.space
+  admin_api_cors_allowed_origins: "https://kong-manager.trongduong.space"
