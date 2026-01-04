@@ -35,3 +35,7 @@ secretEnv:
   envName: KC_DB_PASSWORD
   secretName: rds-db-password
   secretKey: password
+
+targetGroupBinding:
+  enabled: true
+  targetGroupARN: "arn:aws:elasticloadbalancing:ap-northeast-2:1234567890:targetgroup/shopnow-keycloak-tg/xxxxxx"
