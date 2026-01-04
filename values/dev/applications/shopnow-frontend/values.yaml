@@ -12,4 +12,4 @@ configMap:
 targetGroupBinding:
   enabled: true
   # Điền ARN của Target Group port 80 cho domain trongduong.space
-  targetGroupARN: arn:aws:elasticloadbalancing:ap-northeast-2:980921740481:targetgroup/shopnow-fe-tg/xxxxxx
+  targetGroupARN: arn:aws:elasticloadbalancing:ap-northeast-2:993839006183:targetgroup/shopnow-fe-tg/e95fe81794d4e654

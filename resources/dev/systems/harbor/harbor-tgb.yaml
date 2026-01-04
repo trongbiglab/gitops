@@ -4,7 +4,7 @@ metadata:
   name: harbor-server
   namespace: infra
 spec:
-  targetGroupARN: arn:aws:elasticloadbalancing:ap-northeast-2:980921740481:targetgroup/harbor-tg/0b131f775c07e568
+  targetGroupARN: arn:aws:elasticloadbalancing:ap-northeast-2:993839006183:targetgroup/harbor-tg/419d18dd39c0aca2
   targetType: ip
   serviceRef:
     name: harbor

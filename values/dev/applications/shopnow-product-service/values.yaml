@@ -16,7 +16,7 @@ configMap:
     eureka.instance.instance-id=${spring.application.name}
     eureka.client.service-url.defaultZone=http://shopnow-discovery-server-service:8761/eureka/
 
-    spring.datasource.url=jdbc:postgresql://dsq-rds-db.cdo6e2emyxdq.ap-northeast-2.rds.amazonaws.com:5432/postgres?useSSL=false
+    spring.datasource.url=jdbc:postgresql://dsq-rds-db.czgk602wqbt4.ap-northeast-2.rds.amazonaws.com:5432/postgres?useSSL=false
     spring.datasource.username=postgres
 
     spring.jpa.hibernate.ddl-auto=update

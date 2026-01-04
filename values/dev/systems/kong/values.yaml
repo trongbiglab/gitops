@@ -46,7 +46,7 @@ manager:
 env:
   role: traditional
   database: "postgres"
-  pg_host: "dsq-rds-db.cdo6e2emyxdq.ap-northeast-2.rds.amazonaws.com"
+  pg_host: "dsq-rds-db.czgk602wqbt4.ap-northeast-2.rds.amazonaws.com"
   pg_user: "postgres"
   pg_database: "kong"
   pg_password:

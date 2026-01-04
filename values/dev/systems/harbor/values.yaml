@@ -24,7 +24,7 @@ persistence:
 database:
   type: external
   external:
-    host: "dsq-rds-db.cdo6e2emyxdq.ap-northeast-2.rds.amazonaws.com"
+    host: "dsq-rds-db.czgk602wqbt4.ap-northeast-2.rds.amazonaws.com"
     port: "5432"
     username: "postgres"
     coreDatabase: "harbor"

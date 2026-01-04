@@ -38,4 +38,4 @@ secretEnv:
 
 targetGroupBinding:
   enabled: true
-  targetGroupARN: "arn:aws:elasticloadbalancing:ap-northeast-2:1234567890:targetgroup/shopnow-keycloak-tg/xxxxxx"
+  targetGroupARN: arn:aws:elasticloadbalancing:ap-northeast-2:993839006183:targetgroup/shopnow-keycloak-tg/de604e3fa9e5a770

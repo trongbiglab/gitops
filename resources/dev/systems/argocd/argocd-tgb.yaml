@@ -4,7 +4,7 @@ metadata:
   name: argocd-server
   namespace: argocd
 spec:
-  targetGroupARN: arn:aws:elasticloadbalancing:ap-northeast-2:980921740481:targetgroup/argocd/5a5fcc2364f90419
+  targetGroupARN: arn:aws:elasticloadbalancing:ap-northeast-2:993839006183:targetgroup/argocd/6c4cd0ea084878be
   targetType: ip
 
   serviceRef:

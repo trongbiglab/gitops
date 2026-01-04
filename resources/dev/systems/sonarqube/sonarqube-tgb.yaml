@@ -4,7 +4,7 @@ metadata:
   name: sonarqube
   namespace: infra
 spec:
-  targetGroupARN: arn:aws:elasticloadbalancing:ap-northeast-2:980921740481:targetgroup/sonar-tg/ec268804dc645286
+  targetGroupARN: arn:aws:elasticloadbalancing:ap-northeast-2:993839006183:targetgroup/sonar-tg/feab7564ba293c96
   targetType: ip
   serviceRef:
     name: sonarqube-sonarqube

@@ -6,7 +6,7 @@ metadata:
   namespace: kong
 spec:
   # Thay ARN của TG cho Proxy (Port 80/8000)
-  targetGroupARN: arn:aws:elasticloadbalancing:ap-northeast-2:123456789012:targetgroup/tg-kong-proxy/abc111
+  targetGroupARN: arn:aws:elasticloadbalancing:ap-northeast-2:993839006183:targetgroup/kong-proxy-tg/9d4ee845c07b129b
   targetType: ip
   serviceRef:
     name: kong-gateway-kong-proxy # Tên service mặc định của helm
@@ -20,7 +20,7 @@ metadata:
   namespace: kong
 spec:
   # Thay ARN của TG cho Admin API (Port 8001)
-  targetGroupARN: arn:aws:elasticloadbalancing:ap-northeast-2:123456789012:targetgroup/tg-kong-admin/abc222
+  targetGroupARN: arn:aws:elasticloadbalancing:ap-northeast-2:993839006183:targetgroup/kong-admin-tg/2e2ff11d068c84a9
   targetType: ip
   serviceRef:
     name: kong-gateway-kong-admin
@@ -34,7 +34,7 @@ metadata:
   namespace: kong
 spec:
   # Thay ARN của TG cho Manager (Port 8002)
-  targetGroupARN: arn:aws:elasticloadbalancing:ap-northeast-2:123456789012:targetgroup/tg-kong-manager/abc333
+  targetGroupARN: arn:aws:elasticloadbalancing:ap-northeast-2:993839006183:targetgroup/kong-manager-tg/300a0f01db689a36
   targetType: ip
   serviceRef:
     name: kong-gateway-kong-manager
