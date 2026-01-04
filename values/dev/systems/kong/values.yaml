@@ -61,9 +61,10 @@ env:
   admin_gui_url: http://kong-manager.trongduong.space
   admin_gui_api_url: http://kong-admin-api.trongduong.space
   admin_api_cors_allowed_origins: "http://kong-manager.trongduong.space"
-  pg_ssl: "off"
+  pg_ssl: "on"
   pg_ssl_verify: "off"
   # pg_ssl_version: "tlsv1_3"
+  lua_ssl_trusted_certificate: /etc/ssl/certs/ca-certificates.crt
 
   # Tùy chỉnh router để chạy nhanh hơn
   router_flavor: "traditional"
