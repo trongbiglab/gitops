@@ -2,9 +2,9 @@ namespace: kong
 
 postgresql:
   enabled: false
-image:
-  repository: kong
-  tag: "3.9-ubuntu" 
+# image:
+#   repository: kong
+#   tag: "3.9-ubuntu" 
 
 # Cấu hình Ingress Controller
 ingressController:
@@ -46,25 +46,25 @@ manager:
     enabled: false
 
 # Cấu hình để chạy Migration khởi tạo DB
-deployment:
-  userDefinedVolumes:
-    - name: rds-ca-volume
-      configMap:
-        name: rds-ca-cert
-  userDefinedVolumeMounts:
-    - name: rds-ca-volume
-      mountPath: /etc/ssl/certs/rds-ca.pem
-      subPath: rds-ca.pem
+# deployment:
+#   userDefinedVolumes:
+#     - name: rds-ca-volume
+#       configMap:
+#         name: rds-ca-cert
+#   userDefinedVolumeMounts:
+#     - name: rds-ca-volume
+#       mountPath: /etc/ssl/certs/rds-ca.pem
+#       subPath: rds-ca.pem
 
-migrations:
-  userDefinedVolumes:
-    - name: rds-ca-volume
-      configMap:
-        name: rds-ca-cert
-  userDefinedVolumeMounts:
-    - name: rds-ca-volume
-      mountPath: /etc/ssl/certs/rds-ca.pem
-      subPath: rds-ca.pem
+# migrations:
+#   userDefinedVolumes:
+#     - name: rds-ca-volume
+#       configMap:
+#         name: rds-ca-cert
+#   userDefinedVolumeMounts:
+#     - name: rds-ca-volume
+#       mountPath: /etc/ssl/certs/rds-ca.pem
+#       subPath: rds-ca.pem
 
 
 # Biến môi trường kết nối RDS
@@ -81,11 +81,11 @@ env:
         key: "password"
   
   # Bật SSL nhưng tắt verify để tránh lỗi SNI/Hostname mismatch
-  pg_ssl: "on"
+  pg_ssl: "off"
   pg_ssl_verify: "off" 
   
   # Chỉ định CA để thư viện Lua khởi tạo Context thành công
-  lua_ssl_trusted_certificate: /etc/ssl/certs/rds-ca.pem
+  # lua_ssl_trusted_certificate: /etc/ssl/certs/rds-ca.pem
   
   # Bỏ pg_ssl_version để Kong tự thương lượng với Postgres 17
   
