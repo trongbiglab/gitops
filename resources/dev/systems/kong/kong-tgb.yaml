@@ -9,7 +9,7 @@ spec:
   targetGroupARN: arn:aws:elasticloadbalancing:ap-northeast-2:993839006183:targetgroup/kong-proxy-tg/9d4ee845c07b129b
   targetType: ip
   serviceRef:
-    name: kong-gateway-kong-proxy # Tên service mặc định của helm
+    name: kong-kong-proxy # Tên service mặc định của helm
     port: 8000
 ---
 # 2. TargetGroupBinding cho Admin API (kong-admin-api.trongduong.space)
@@ -23,7 +23,7 @@ spec:
   targetGroupARN: arn:aws:elasticloadbalancing:ap-northeast-2:993839006183:targetgroup/kong-admin-tg/2e2ff11d068c84a9
   targetType: ip
   serviceRef:
-    name: kong-gateway-kong-admin
+    name: kong-kong-admin
     port: 8001
 ---
 # 3. TargetGroupBinding cho Kong Manager (kong-manager.trongduong.space)
@@ -37,5 +37,5 @@ spec:
   targetGroupARN: arn:aws:elasticloadbalancing:ap-northeast-2:993839006183:targetgroup/kong-manager-tg/300a0f01db689a36
   targetType: ip
   serviceRef:
-    name: kong-gateway-kong-manager
+    name: kong-kong-manager
     port: 8002
