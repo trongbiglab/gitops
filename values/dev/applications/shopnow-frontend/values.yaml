@@ -6,7 +6,7 @@ image:
 
 service:
   port: 80
-  targetPort: 80
+  targetPort: 3000
 configMap:
   enabled: false # Frontend thường build env vào code hoặc dùng Nginx config riêng
 targetGroupBinding:
