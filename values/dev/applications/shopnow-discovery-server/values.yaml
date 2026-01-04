@@ -1,0 +1,17 @@
+nameOverride: shopnow-discovery-server
+image:
+  repository: harbor.trongduong.space/shopnow/discovery-server
+  tag: v1
+service:
+  port: 8761
+  targetPort: 8761
+configMap:
+  enabled: true
+  mountPath: /app/src/main/resources/application.properties
+  data: |
+    spring.application.name=discovery-server
+    server.port=8761
+    eureka.client.register-with-eureka=false
+    eureka.client.fetch-registry=false
+targetGroupBinding:
+  enabled: false

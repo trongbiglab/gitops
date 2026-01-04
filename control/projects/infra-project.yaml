@@ -22,6 +22,7 @@ spec:
     - 'https://SonarSource.github.io/*'
     - 'https://charts.konghq.com'
     - 'https://raw.githubusercontent.com/*'
+    - 'https://charts.gitlab.io'
 
   destinations:
     - namespace: '*'

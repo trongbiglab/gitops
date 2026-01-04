@@ -6,7 +6,7 @@ spec:
   template:
     metadata:
       labels:
-        workload: general-purpose
+        purpose: workload
 
     spec:
       nodeClassRef:
@@ -21,7 +21,9 @@ spec:
         # Prefer Spot, fallback to OnDemand automatically
         - key: karpenter.sh/capacity-type
           operator: In
-          values: ["spot", "on-demand"]
+          # values: ["spot", "on-demand"]
+          values: ["on-demand"]
+
 
         # Architecture
         - key: kubernetes.io/arch

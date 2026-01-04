@@ -1,0 +1,37 @@
+replicaCount: 1
+
+image:
+  repository: quay.io/keycloak/keycloak
+  tag: 23.0.3
+
+# Keycloak cần command để khởi động và import
+args: ["start-dev", "--import-realm"]
+
+service:
+  port: 8080
+  targetPort: 8080
+
+configMap:
+  enabled: true
+  # Tên file để template map vào subPath và Key trong ConfigMap
+  fileName: realm-export.json
+  # Thư mục Keycloak quét file để import
+  mountPath: /opt/keycloak/data/import/realm-export.json
+  data: |
+    {
+      "id": "1040aae1-5c12-4ac0-87d0-c3624814fb20",
+      "realm": "java-microservice-realm",
+      ... (nội dung JSON của bạn) ...
+    }
+
+# Các biến môi trường cho Keycloak
+env:
+  KC_HOSTNAME_STRICT: "false"
+  KEYCLOAK_ADMIN: "admin"
+  KEYCLOAK_ADMIN_PASSWORD: "admin"
+
+# Password DB lấy từ Secret (nếu dùng DB ngoài)
+secretEnv:
+  envName: KC_DB_PASSWORD
+  secretName: rds-db-password
+  secretKey: password

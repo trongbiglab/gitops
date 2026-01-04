@@ -1,22 +1,24 @@
-# apiVersion: argoproj.io/v1alpha1
-# kind: AppProject
-# metadata:
-#   name: bootstrap-application
-#   namespace: argocd
-# spec:
-#   description: "Bootstrap apps"
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: bootstrap-application
+  namespace: argocd
+spec:
+  description: "Bootstrap apps"
 
-#   sourceRepos:
-#     # Repo chứa Template Helm Chart của service
-#     - 'https://gitlab.com/platform7740601/service-chart-template.git'
+  sourceRepos:
+    # Repo chứa Template Helm Chart của service
+    - 'https://github.com/trongbiglab/software-template'
     
-#     # Repo chứa cấu hình values
-#     - 'https://gitlab.com/platform7740601/gitops.git'
+    # Repo chứa cấu hình values
+    - 'https://github.com/trongbiglab/gitops'
+    - 'https://github.com/trongbiglab/*'
+    - 'quay.io/keycloak/keycloak'
 
-#   destinations:
-#     - namespace: '*'
-#       server: https://kubernetes.default.svc
+  destinations:
+    - namespace: '*'
+      server: https://kubernetes.default.svc
 
-#   clusterResourceWhitelist:
-#     - group: '*'
-#       kind: '*'
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'

@@ -1,0 +1,26 @@
+nameOverride: shopnow-product-service
+image:
+  repository: harbor.trongduong.space/shopnow/product-service
+  tag: v1
+service:
+  port: 5861
+  targetPort: 5861
+configMap:
+  enabled: true
+  mountPath: /app/src/main/resources/application.properties
+  data: |
+    spring.application.name=product-service
+    server.port=5861
+
+    eureka.instance.hostname=product-service
+    eureka.instance.instance-id=${spring.application.name}
+    eureka.client.service-url.defaultZone=http://shopnow-discovery-server-service:8761/eureka/
+
+    spring.datasource.url=jdbc:postgresql://dsq-rds-db.cdo6e2emyxdq.ap-northeast-2.rds.amazonaws.com:5432/postgres?useSSL=false
+    spring.datasource.username=postgres
+
+    spring.jpa.hibernate.ddl-auto=update
+    spring.jpa.show-sql=true
+    spring.jpa.properties.hibernate.format_sql=true
+targetGroupBinding:
+  enabled: false

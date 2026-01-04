@@ -1,37 +1,65 @@
+namespace: kong
+
+postgresql:
+  enabled: false
+
+# Cấu hình Ingress Controller (để quản lý các rule Ingress trong K8s)
+ingressController:
+  enabled: true
+  installCRDs: true
+
+# Cấu hình Proxy (Data Plane)
+proxy:
+  enabled: true
+  type: ClusterIP  # TGB sẽ trỏ trực tiếp vào ClusterIP hoặc IP của Pod
+  http:
+    enabled: true
+    servicePort: 8000
+  tls:
+    enabled: false 
+
+# Cấu hình Admin API
+admin:
+  enabled: true
+  type: ClusterIP
+  http:
+    enabled: true
+    servicePort: 8001
+    containerPort: 8001
+  ingress:
+    enabled: false
+
+# Cấu hình Giao diện quản lý
+manager:
+  enabled: true
+  type: ClusterIP
+  http:
+    enabled: true
+    servicePort: 8002
+    containerPort: 8002
+  tls:
+    enabled: false
+  ingress:
+    enabled: false
+
+# Biến môi trường kết nối RDS
 env:
+  role: traditional
   database: "postgres"
   pg_host: "dsq-rds-db.cdo6e2emyxdq.ap-northeast-2.rds.amazonaws.com"
   pg_user: "postgres"
   pg_database: "kong"
-  
-  # Lấy mật khẩu từ secret thực tế bạn đang có (rds-kong-secret)
   pg_password:
     valueFrom:
       secretKeyRef:
         name: "rds-kong-secret"
         key: "password"
-
-  # 2 dòng này dù docs không ghi nhưng là "chìa khóa" để giải quyết lỗi "no encryption"
+  admin_gui_url: http://kong-manager.trongduong.space
+  admin_gui_api_url: http://kong-admin-api.trongduong.space
+  admin_api_cors_allowed_origins: "http://kong-manager.trongduong.space"
   pg_ssl: "on"
   pg_ssl_verify: "off"
+  pg_ssl_version: "tlsv1_3"
 
-  # Các cấu hình mặc định khác
+  # Tùy chỉnh router để chạy nhanh hơn
   router_flavor: "traditional"
-  nginx_worker_processes: "2"
-  proxy_access_log: /dev/stdout
-  proxy_error_log: /dev/stderr
-
-nodeSelector:
-  purpose: system
-
-deployment:
-  kong:
-    enabled: true
-
-ingressController:
-  enabled: true
-  nodeSelector:
-    purpose: system
-
-postgresql:
-  enabled: false

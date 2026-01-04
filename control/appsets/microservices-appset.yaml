@@ -1,43 +1,64 @@
-# apiVersion: argoproj.io/v1alpha1
-# kind: ApplicationSet
-# metadata:
-#   name: platform-apps-dev
-#   namespace: argocd
-# spec:
-#   goTemplate: true
-#   generators:
-#     - list:
-#         elements:
-#           - name: user-service
-#             namespace: shopnow
-#             repoURL: https://gitlab.com/platform7740601/service-chart-template.git
-#             path: .
-#             targetRevision: main
-#             releaseName: user-service
-#             valuesPath: values/dev/applications/user-service/values.yaml
-#   template:
-#     metadata:
-#       name: '{{.name}}'
-#       namespace: argocd
-#     spec:
-#       project: bootstrap-application
-#       sources:
-#         - repoURL: '{{.repoURL}}'
-#           targetRevision: '{{.targetRevision}}'
-#           path: '{{.path}}'
-#           helm:
-#             releaseName: '{{.releaseName}}'
-#             valueFiles:
-#               - $values/{{.valuesPath}}
-#         - repoURL: https://github.com/trongbiglab/gitops
-#           targetRevision: main
-#           ref: values
-#       destination:
-#         server: https://kubernetes.default.svc
-#         namespace: '{{.namespace}}'
-#       syncPolicy:
-#         automated:
-#           prune: true
-#           selfHeal: true
-#         syncOptions:
-#           - CreateNamespace=true
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: platform-apps-dev
+  namespace: argocd
+spec:
+  goTemplate: true
+  generators:
+    - list:
+        elements:
+          - name: shopnow-keycloak
+            namespace: shopnow
+            targetRevision: main
+            releaseName: shopnow-keycloak
+            path: .
+            valuesPath: values/dev/applications/shopnow-keycloak/values.yaml
+
+          # --- FRONTEND (Thêm mới) ---
+          - name: shopnow-frontend
+            namespace: shopnow
+            targetRevision: main
+            releaseName: shopnow-frontend
+            path: .
+            valuesPath: values/dev/applications/shopnow-frontend/values.yaml
+
+          # - name: user-service
+          #   namespace: shopnow
+          #   targetRevision: main
+          #   releaseName: shopnow-user-service
+          #   path: .
+          #   valuesPath: values/dev/applications/shopnow-user-service/values.yaml
+          # - name: product-service
+          #   namespace: shopnow
+          #   targetRevision: main
+          #   releaseName: shopnow-product-service
+          #   path: .
+          #   valuesPath: values/dev/applications/shopnow-product-service/values.yaml
+
+  template:
+    metadata:
+      name: '{{.name}}'
+      namespace: argocd
+    spec:
+      project: bootstrap-application
+      sources:
+        - repoURL: https://github.com/trongbiglab/software-template
+          targetRevision: '{{.targetRevision}}'
+          path: '{{.path}}'
+          helm:
+            releaseName: '{{.releaseName}}'
+            valueFiles:
+              - $values/{{.valuesPath}}
+        - repoURL: https://github.com/trongbiglab/gitops
+          targetRevision: main
+          ref: values
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{.namespace}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

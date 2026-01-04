@@ -1,0 +1,15 @@
+replicaCount: 1
+
+image:
+  repository: harbor.trongduong.space/shopnow/frontend
+  tag: v1
+
+service:
+  port: 80
+  targetPort: 80
+configMap:
+  enabled: false # Frontend thường build env vào code hoặc dùng Nginx config riêng
+targetGroupBinding:
+  enabled: true
+  # Điền ARN của Target Group port 80 cho domain trongduong.space
+  targetGroupARN: arn:aws:elasticloadbalancing:ap-northeast-2:980921740481:targetgroup/shopnow-fe-tg/xxxxxx

@@ -1,0 +1,56 @@
+gitlabUrl: https://gitlab.trongduong.space
+runnerRegistrationToken: ""
+runnerRegistrationTokenSecret: gitlab-runner-secret
+rbac:
+  create: true
+
+serviceAccount:
+  create: true
+  name: gitlab-runner
+
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: purpose
+              operator: In
+              values:
+                - system
+
+tolerations:
+  - key: "purpose"
+    operator: "Equal"
+    value: "system"
+    effect: "NoSchedule"
+
+runners:
+  config: |
+    [[runners]]
+      executor = "kubernetes"
+
+      [runners.kubernetes]
+        namespace = "gitlab-runner"
+        image = "alpine:3.19"
+        privileged = true
+
+        cpu_request = "500m"
+        cpu_limit = "2"
+        memory_request = "1Gi"
+        memory_limit = "4Gi"
+
+        ephemeral_storage_request = "5Gi"
+        ephemeral_storage_limit = "20Gi"
+
+        [runners.kubernetes.affinity.node_affinity.required_during_scheduling_ignored_during_execution]
+          [[runners.kubernetes.affinity.node_affinity.required_during_scheduling_ignored_during_execution.node_selector_terms]]
+            [[runners.kubernetes.affinity.node_affinity.required_during_scheduling_ignored_during_execution.node_selector_terms.match_expressions]]
+              key = "purpose"
+              operator = "In"
+              values = ["workload"]
+
+        [[runners.kubernetes.tolerations]]
+          key = "purpose"
+          operator = "Equal"
+          value = "workload"
+          effect = "NoSchedule"

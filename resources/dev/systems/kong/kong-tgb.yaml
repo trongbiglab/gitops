@@ -1,11 +1,41 @@
+# 1. TargetGroupBinding cho Kong Proxy (Traffic người dùng)
 apiVersion: elbv2.k8s.aws/v1beta1
 kind: TargetGroupBinding
 metadata:
-  name: kong-proxy
+  name: kong-proxy-tgb
   namespace: kong
 spec:
-  targetGroupARN: arn:aws:elasticloadbalancing:ap-northeast-2:980921740481:targetgroup/kong-tg/2420686c3de8adc9
+  # Thay ARN của TG cho Proxy (Port 80/8000)
+  targetGroupARN: arn:aws:elasticloadbalancing:ap-northeast-2:123456789012:targetgroup/tg-kong-proxy/abc111
   targetType: ip
   serviceRef:
-    name: kong-kong-proxy
+    name: kong-gateway-kong-proxy # Tên service mặc định của helm
     port: 8000
+---
+# 2. TargetGroupBinding cho Admin API (kong-admin-api.trongduong.space)
+apiVersion: elbv2.k8s.aws/v1beta1
+kind: TargetGroupBinding
+metadata:
+  name: kong-admin-api-tgb
+  namespace: kong
+spec:
+  # Thay ARN của TG cho Admin API (Port 8001)
+  targetGroupARN: arn:aws:elasticloadbalancing:ap-northeast-2:123456789012:targetgroup/tg-kong-admin/abc222
+  targetType: ip
+  serviceRef:
+    name: kong-gateway-kong-admin
+    port: 8001
+---
+# 3. TargetGroupBinding cho Kong Manager (kong-manager.trongduong.space)
+apiVersion: elbv2.k8s.aws/v1beta1
+kind: TargetGroupBinding
+metadata:
+  name: kong-manager-tgb
+  namespace: kong
+spec:
+  # Thay ARN của TG cho Manager (Port 8002)
+  targetGroupARN: arn:aws:elasticloadbalancing:ap-northeast-2:123456789012:targetgroup/tg-kong-manager/abc333
+  targetType: ip
+  serviceRef:
+    name: kong-gateway-kong-manager
+    port: 8002

@@ -1,6 +1,6 @@
 jdbcOverwrite:
   enabled: true  # Dùng "enabled" thay vì "enable" (vì "enable" đã bị deprecated)
-  jdbcUrl: "jdbc:postgresql://dsq-rds-db.cdo6e2emyxdq.ap-northeast-2.rds.amazonaws.com:5432/mainpostgresdb"
+  jdbcUrl: "jdbc:postgresql://dsq-rds-db.cdo6e2emyxdq.ap-northeast-2.rds.amazonaws.com:5432/sonarqube"
   jdbcUsername: "postgres"
   
   # Đây là 2 tham số quan trọng nhất để khớp với rds-db-password của bạn

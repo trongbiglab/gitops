@@ -30,7 +30,6 @@ database:
     coreDatabase: "harbor"
     existingSecret: "rds-db-password"
     sslmode: "require"
-  # Gộp podLabels vào đây (Nếu dùng internal thì nó có tác dụng, external thì có thể bỏ qua nhưng để đây không lỗi)
   podLabels: { purpose: system }
 
 redis:
