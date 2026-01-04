@@ -3,7 +3,7 @@ namespace: kong
 postgresql:
   enabled: false
 
-# Cấu hình Ingress Controller (để quản lý các rule Ingress trong K8s)
+# Cấu hình Ingress Controller
 ingressController:
   enabled: true
   installCRDs: true
@@ -11,7 +11,7 @@ ingressController:
 # Cấu hình Proxy (Data Plane)
 proxy:
   enabled: true
-  type: ClusterIP  # TGB sẽ trỏ trực tiếp vào ClusterIP hoặc IP của Pod
+  type: ClusterIP
   http:
     enabled: true
     servicePort: 8000
@@ -42,9 +42,30 @@ manager:
   ingress:
     enabled: false
 
+# Cấu hình để chạy Migration khởi tạo DB
 migrations:
   install: true
   preUpgrade: true
+  # Mount chứng chỉ vào Job chạy migration
+  userDefinedVolumes:
+    - name: rds-ca-volume
+      configMap:
+        name: rds-ca-cert
+  userDefinedVolumeMounts:
+    - name: rds-ca-volume
+      mountPath: /etc/ssl/certs/rds-ca.pem
+      subPath: rds-ca.pem
+
+# Mount chứng chỉ vào Pod Kong chính
+deployment:
+  userDefinedVolumes:
+    - name: rds-ca-volume
+      configMap:
+        name: rds-ca-cert
+  userDefinedVolumeMounts:
+    - name: rds-ca-volume
+      mountPath: /etc/ssl/certs/rds-ca.pem
+      subPath: rds-ca.pem
 
 # Biến môi trường kết nối RDS
 env:
@@ -58,13 +79,14 @@ env:
       secretKeyRef:
         name: "rds-kong-secret"
         key: "password"
+  
+  # Cấu hình SSL chuẩn để fix lỗi "nil value" và "no encryption"
+  pg_ssl: "on"
+  pg_ssl_verify: "on"
+  pg_ssl_version: "tlsv1_2"
+  lua_ssl_trusted_certificate: /etc/ssl/certs/rds-ca.pem
+
   admin_gui_url: http://kong-manager.trongduong.space
   admin_gui_api_url: http://kong-admin-api.trongduong.space
   admin_api_cors_allowed_origins: "http://kong-manager.trongduong.space"
-  pg_ssl: "on"
-  pg_ssl_verify: "off"
-  # pg_ssl_version: "tlsv1_3"
-  lua_ssl_trusted_certificate: /etc/ssl/certs/ca-certificates.crt
-
-  # Tùy chỉnh router để chạy nhanh hơn
   router_flavor: "traditional"
