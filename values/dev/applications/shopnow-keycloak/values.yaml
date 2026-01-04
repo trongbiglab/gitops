@@ -2266,6 +2266,9 @@ configMap:
 
 # Các biến môi trường cho Keycloak
 env:
+  KC_HOSTNAME: "keycloak.trongduong.space" 
+  KC_PROXY: "edge"                       
+  KC_HTTP_ENABLED: "true"                 
   KC_HOSTNAME_STRICT: "false"
   KEYCLOAK_ADMIN: "admin"
   KEYCLOAK_ADMIN_PASSWORD: "admin"
