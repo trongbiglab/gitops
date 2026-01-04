@@ -2,6 +2,9 @@ namespace: kong
 
 postgresql:
   enabled: false
+image:
+  repository: kong
+  tag: "3.9-ubuntu" 
 
 # Cấu hình Ingress Controller
 ingressController:
@@ -43,20 +46,6 @@ manager:
     enabled: false
 
 # Cấu hình để chạy Migration khởi tạo DB
-migrations:
-  install: true
-  preUpgrade: true
-  # Mount chứng chỉ vào Job chạy migration
-  userDefinedVolumes:
-    - name: rds-ca-volume
-      configMap:
-        name: rds-ca-cert
-  userDefinedVolumeMounts:
-    - name: rds-ca-volume
-      mountPath: /etc/ssl/certs/rds-ca.pem
-      subPath: rds-ca.pem
-
-# Mount chứng chỉ vào Pod Kong chính
 deployment:
   userDefinedVolumes:
     - name: rds-ca-volume
@@ -66,6 +55,17 @@ deployment:
     - name: rds-ca-volume
       mountPath: /etc/ssl/certs/rds-ca.pem
       subPath: rds-ca.pem
+
+migrations:
+  userDefinedVolumes:
+    - name: rds-ca-volume
+      configMap:
+        name: rds-ca-cert
+  userDefinedVolumeMounts:
+    - name: rds-ca-volume
+      mountPath: /etc/ssl/certs/rds-ca.pem
+      subPath: rds-ca.pem
+
 
 # Biến môi trường kết nối RDS
 env:
@@ -80,13 +80,15 @@ env:
         name: "rds-kong-secret"
         key: "password"
   
-  # Cấu hình SSL chuẩn để fix lỗi "nil value" và "no encryption"
+  # Bật SSL nhưng tắt verify để tránh lỗi SNI/Hostname mismatch
   pg_ssl: "on"
-  pg_ssl_verify: "on"
-  pg_ssl_version: "tlsv1_2"
+  pg_ssl_verify: "off" 
+  
+  # Chỉ định CA để thư viện Lua khởi tạo Context thành công
   lua_ssl_trusted_certificate: /etc/ssl/certs/rds-ca.pem
-
+  
+  # Bỏ pg_ssl_version để Kong tự thương lượng với Postgres 17
+  
   admin_gui_url: http://kong-manager.trongduong.space
   admin_gui_api_url: http://kong-admin-api.trongduong.space
   admin_api_cors_allowed_origins: "http://kong-manager.trongduong.space"
-  router_flavor: "traditional"
