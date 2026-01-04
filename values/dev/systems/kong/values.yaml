@@ -42,6 +42,10 @@ manager:
   ingress:
     enabled: false
 
+migrations:
+  install: true
+  preUpgrade: true
+
 # Biến môi trường kết nối RDS
 env:
   role: traditional
@@ -57,7 +61,7 @@ env:
   admin_gui_url: http://kong-manager.trongduong.space
   admin_gui_api_url: http://kong-admin-api.trongduong.space
   admin_api_cors_allowed_origins: "http://kong-manager.trongduong.space"
-  pg_ssl: "on"
+  pg_ssl: "off"
   pg_ssl_verify: "off"
   # pg_ssl_version: "tlsv1_3"
 
